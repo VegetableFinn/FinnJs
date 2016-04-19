@@ -15,7 +15,10 @@ const OneHome = React.createClass({
     },
     
     componentDidMount: function() {
-    $.get("one/getLastOne.json", function(result) {
+        
+        const local_url = "http://127.0.0.1:8080/";
+        const server_url = "";
+    $.get(local_url + "one/getLastOne.json", function(result) {
       const oneresult = JSON.parse(result);
       if (this.isMounted()) {
        this.setState({

@@ -10,13 +10,6 @@ const Word = React.createClass({
         };
   },
     
-    componentDidMount(){
-        const oneParam = this.props.oneData;
-        this.setState({
-          oneData: oneParam
-        });
-    },
-    
     componentWillReceiveProps: function(nextProps) {
       this.setState({
         oneData: nextProps.oneData
