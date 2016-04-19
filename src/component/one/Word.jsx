@@ -31,8 +31,8 @@ const Word = React.createClass({
           <Col span="24">
             <div>
                 <Col className="one-word-word">
-                    <p>{oneData.content}</p>
                     <p>{oneData.title}</p>
+                    <p>{oneData.content}</p>
                 </Col>
             </div>
           </Col>

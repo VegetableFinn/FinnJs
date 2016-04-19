@@ -11,13 +11,7 @@ const Footer = React.createClass({
   render() {
     return (
       <div className="footer">
-        <Row className="footer-row">
-          <Col span="24">
-            <div>
-              <Col className="footer-text">“It's time to start living the life you've only imagined.”</Col>
-            </div>
-          </Col>
-        </Row>
+              生活就是最精彩的剧本。
       </div>);
   },
 });

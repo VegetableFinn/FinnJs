@@ -1,7 +1,7 @@
 import './Header.less';
 
 import React from 'react';
-import { Row, Col } from 'antd' ;
+import { Row, Col, Input } from 'antd' ;
 
 const Header = React.createClass({
     getInitialState() {
@@ -17,16 +17,12 @@ const Header = React.createClass({
                             <a href="#">FinnAndTheWorld</a>
                         </div>
                     </Col>
-                    <Col span="16">
-                        <div className="hrefList">
-                            <Col span="3"></Col>
+                    <Col span="20">
+                        <div>
+                            <Input id="largeInput" size="large" placeholder="如果。你想说点什么。" />
                         </div>
                     </Col>
-                    <Col span="4">
-                        <div className="welcomeDiv">
-                            <span></span>
-                        </div>
-                    </Col>
+                    
                 </Row>
             </div>);
     },

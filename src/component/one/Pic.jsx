@@ -10,17 +10,17 @@ const Pic = React.createClass({
     };
   },
     
-    componentDidMount(){
-        const oneImg = this.props.oneImg;
-        
-        this.setState({
-          oneImg: oneImg
-        });
-    },
+//    componentDidMount(){
+//        const oneImg = this.props.oneImg;
+//        
+//        this.setState({
+//          oneImg: "one/showImage.json?title="+oneImg
+//        });
+//    },
     
     componentWillReceiveProps: function(nextProps) {
       this.setState({
-        oneImg: nextProps.oneImg
+        oneImg: "one/showImage.json?title="+nextProps.oneImg
       });
     },
 

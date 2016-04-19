@@ -27,7 +27,7 @@ const OneHome = React.createClass({
     
     render() {
         const oneDataParam = this.state.oneData;
-        const oneImgParam = this.state.oneData.imgUrl;
+        const oneImgParam = this.state.oneData.title;
         return (
           <div className="whole">
             <Header/>
