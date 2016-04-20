@@ -3,6 +3,9 @@ import './Pic.less';
 import React from 'react';
 import { Row, Col, Spin } from 'antd' ;
 
+import util from '../../common/util.js';
+
+    
 const Pic = React.createClass({
   getInitialState() {
     return {
@@ -15,7 +18,7 @@ const Pic = React.createClass({
         const local_url = "http://127.0.0.1:8080/";
         const server_url = "";
       this.setState({
-        oneImg: local_url+"one/showImage.json?title="+nextProps.oneImg
+        oneImg: util.getBaseUrl()+"one/showImage.json?title="+nextProps.oneImg
       });
     },
 

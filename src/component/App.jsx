@@ -6,12 +6,30 @@ import { Link } from 'react-router';
 
 const SubMenu = Menu.SubMenu;
 
+const storage = window.sessionStorage;
 
 const App = React.createClass({
+    
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
+    
     getInitialState() {
         return null;
     },
     componentWillReceiveProps(nextProps) {
+    },
+    
+    componentWillMount(){
+        if(storage.getItem("user") === null){
+             this.context.router.push('/');
+        }
+       
+    },
+    
+    componentDidMount(){
+//        this.context.router.push('/');
+//        alert(storage.getItem("abc"));
     },
 
     render() {

@@ -1,13 +1,16 @@
 import React from 'react';
 import './OneHome.less';
 
-import Header from './Header'
-import Footer from './Footer'
-import Pic from './Pic'
-import Word from './Word'
-    
+import Header from './Header';
+import Footer from './Footer';
+import Pic from './Pic';
+import Word from './Word';
 
+import util from '../../common/util.js';
+
+const storage = window.sessionStorage;
 const OneHome = React.createClass({
+    
     getInitialState() {
         return {
             oneData:{}
@@ -15,10 +18,8 @@ const OneHome = React.createClass({
     },
     
     componentDidMount: function() {
-        
-        const local_url = "http://127.0.0.1:8080/";
-        const server_url = "";
-    $.get(local_url + "one/getLastOne.json", function(result) {
+    
+    $.get(util.getBaseUrl() + "one/getLastOne.json", function(result) {
       const oneresult = JSON.parse(result);
       if (this.isMounted()) {
        this.setState({
