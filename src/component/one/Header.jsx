@@ -1,7 +1,7 @@
 import './Header.less';
 
 import React from 'react';
-import { Row, Col, Input, Form } from 'antd' ;
+import { Row, Col, Input, Form, message } from 'antd' ;
 import util from '../../common/util.js'
 
 const FormItem = Form.Item;
@@ -12,10 +12,12 @@ const Header = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
+
     
     getInitialState() {
         return ({
-            textInputDisabled: false
+            textInputDisabled: false,
+            saySomething: ""
         });
     },
     
@@ -23,20 +25,40 @@ const Header = React.createClass({
     },
     
      handleInputChange(e) {
-//        this.setState({
-//          value: e.target.value,
-//        });
-         $.get(util.getBaseUrl() + "login.json?loginAccount=" + e.target.value, function(result) {
-          const resultJson = JSON.parse(result);
-          if(resultJson.success){
-              this.setState({
-                  textInputDisabled: true
-              });
-              storage.setItem("user","user");
-              this.context.router.push('/home/welcome');
-          }
-        }.bind(this));
+         this.setState({
+             saySomething: e.target.value
+         });
       },
+    
+    handleKeyDown(e){
+        if(e.keyCode === 13){
+            this.setState({
+                textInputDisabled: true
+            });
+            message.config({
+                top: 70
+            });
+            message.loading('我们正在努力地尝试与遥远的服务器取得连接！', 0);
+            
+            const saySomething = this.state.saySomething;
+            $.get(util.getBaseUrl() + "login.json?loginAccount=" + saySomething, function(result) {
+              const resultJson = JSON.parse(result);
+              message.destroy()
+              if(resultJson.success){
+                  this.setState({
+                      textInputDisabled: true
+                  });
+                  storage.setItem("user","user");
+                  this.context.router.push('/home/welcome');
+              }else{
+                  message.error("嗯哼，貌似你的口令得不到服务器的认可。", 2);
+                  this.setState({
+                      textInputDisabled: false
+                  });
+              }
+            }.bind(this));
+        }
+    },
     
       handleFocusBlur(e) {
 //        this.setState({
@@ -60,7 +82,7 @@ const Header = React.createClass({
                                 <Input id="saySomeThing" size="large" placeholder="如果。你想说点什么。"
                                     autoComplete="off" onChange={this.handleInputChange}
                                     onFocus={this.handleFocusBlur} onBlur={this.handleFocusBlur}
-                                    disabled={textInputDisabled}/>
+                                    disabled={textInputDisabled} onKeyUp={this.handleKeyDown}/>
                         </div>
                     </Col>
                     
