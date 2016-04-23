@@ -49,7 +49,7 @@ const Header = React.createClass({
                       textInputDisabled: true
                   });
                   storage.setItem("user","user");
-                  this.context.router.push('/home/welcome');
+                  this.context.router.push('/home/daily');
               }else{
                   message.error("嗯哼，貌似你的口令得不到服务器的认可。", 2);
                   this.setState({

@@ -41,9 +41,9 @@ const App = React.createClass({
                   defaultSelectedKeys={['home_welcome']} defaultOpenKeys={['home_menu']}>
                   <SubMenu key="home_menu" title={<span><Icon type="user" />HomePage</span>}>
                     <Menu.Item key="home_welcome"><Link to="/home/welcome">Hello Finn.</Link></Menu.Item>
-                    <Menu.Item key="2">选项2</Menu.Item>
-                    <Menu.Item key="3">选项3</Menu.Item>
-                    <Menu.Item key="4">选项4</Menu.Item>
+                  </SubMenu>
+                  <SubMenu key="daily_menu" title={<span><Icon type="user" />Daily</span>}>
+                    <Menu.Item key="home_daily"><Link to="/home/daily">Daily life.</Link></Menu.Item>
                   </SubMenu>
                 </Menu>
               </aside>
@@ -55,13 +55,12 @@ const App = React.createClass({
                 <div className="ant-layout-container">
                   <div className="ant-layout-content">
                     <div style={{ height: 590 }}>
-                      内容区域
                         {this.props.children}
                     </div>
                   </div>
                 </div>
                 <div className="ant-layout-footer">
-                Ant Design 版权所有 © 2015 由蚂蚁金服体验技术部支持
+                "生活就是最精彩的剧本."
                 </div>
               </div>
             </div>
