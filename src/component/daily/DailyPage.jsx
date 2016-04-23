@@ -16,10 +16,29 @@ const DailyPage = React.createClass({
     
     
     handleFinish(recordId){
-        $.get(util.getBaseUrl() + "daily/endDaily.json?id="+recordId, function(result) {
-          const resultList = JSON.parse(result);
-          this.refreshData();
-        }.bind(this));
+        var self = this;
+        $.ajax({
+                type: "get",
+                url: util.getBaseUrl() + "daily/endDaily.json?id="+recordId,
+                xhrFields: {
+                  withCredentials: true
+               },
+                beforeSend: function(XMLHttpRequest){
+                    //ShowLoading();
+                },
+                success: function(data, textStatus){
+                  const resultJson = JSON.parse(data);
+                  if(resultJson.success){
+                      self.refreshData();
+                  }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                    //HideLoading();
+                },
+                error: function(){
+                    //请求出错处理
+                }
+        });
     },
     
     
@@ -82,6 +101,7 @@ const DailyPage = React.createClass({
             row.endDt = dailyData.endDt;
             row.content = dailyData.content;
             row.id = dailyData.id;
+            row.duration = dailyData.durationDt;
             
             if(dailyData.duration){
                 row.isduration = "True"
@@ -100,15 +120,41 @@ const DailyPage = React.createClass({
         this.refreshData()
     },
     
+    
+    
+    
     refreshData(){
-         $.get(util.getBaseUrl() + "daily/getRecent2Days.json", function(result) {
-          const resultList = JSON.parse(result);
-          if (this.isMounted()) {
-           this.setState({
-              dailyDataList: resultList
-            });
-          }
-        }.bind(this));
+        
+         var self = this;
+        $.ajax({
+                type: "get",
+                url: util.getBaseUrl() + "daily/getRecent2Days.json",
+                xhrFields: {
+                  withCredentials: true
+               },
+                beforeSend: function(XMLHttpRequest){
+                    //ShowLoading();
+                },
+                success: function(data, textStatus){
+                    console.info("22")
+                    console.info(data)
+                    
+                    const resultJson = JSON.parse(data);
+                  if(resultJson.success){
+
+                      self.setState({
+                          dailyDataList: resultJson.dailyModels
+                      });
+
+                  }
+                },
+                complete: function(XMLHttpRequest, textStatus){
+                    //HideLoading();
+                },
+                error: function(){
+                    //请求出错处理
+                }
+        });
     },
 
   render() {

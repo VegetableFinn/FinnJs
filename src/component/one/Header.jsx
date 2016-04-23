@@ -41,22 +41,62 @@ const Header = React.createClass({
             message.loading('我们正在努力地尝试与遥远的服务器取得连接！', 0);
             
             const saySomething = this.state.saySomething;
-            $.get(util.getBaseUrl() + "login.json?loginAccount=" + saySomething, function(result) {
-              const resultJson = JSON.parse(result);
-              message.destroy()
-              if(resultJson.success){
-                  this.setState({
-                      textInputDisabled: true
-                  });
-                  storage.setItem("user","user");
-                  this.context.router.push('/home/daily');
-              }else{
-                  message.error("嗯哼，貌似你的口令得不到服务器的认可。", 2);
-                  this.setState({
-                      textInputDisabled: false
-                  });
-              }
-            }.bind(this));
+            
+            
+            var self = this;
+            $.ajax({
+                    type: "get",
+                    url: util.getBaseUrl() + "login.json?loginAccount=" + saySomething,
+                    xhrFields: {
+                      withCredentials: true
+                   },
+                    beforeSend: function(XMLHttpRequest){
+                        //ShowLoading();
+                    },
+                    success: function(data, textStatus){
+                        const resultJson = JSON.parse(data);
+                        console.info(data);
+                        message.destroy()
+                      if(resultJson.success){
+                                                  
+                          self.setState({
+                              textInputDisabled: true
+                          });
+                          storage.setItem("user","user");
+                          self.context.router.push('/home/daily');
+                          
+                      }else{
+                          message.error("嗯哼，貌似你的口令得不到服务器的认可。", 2);
+                          self.setState({
+                              textInputDisabled: false
+                          });
+                      }
+                        
+                    },
+                    complete: function(XMLHttpRequest, textStatus){
+                        //HideLoading();
+                    },
+                    error: function(){
+                        //请求出错处理
+                    }
+            });
+            
+//            $.get(util.getBaseUrl() + "login.json?loginAccount=" + saySomething, function(result) {
+//              const resultJson = JSON.parse(result);
+//              message.destroy()
+//              if(resultJson.success){
+//                  this.setState({
+//                      textInputDisabled: true
+//                  });
+//                  storage.setItem("user","user");
+//                  this.context.router.push('/home/daily');
+//              }else{
+//                  message.error("嗯哼，貌似你的口令得不到服务器的认可。", 2);
+//                  this.setState({
+//                      textInputDisabled: false
+//                  });
+//              }
+//            }.bind(this));
         }
     },
     
