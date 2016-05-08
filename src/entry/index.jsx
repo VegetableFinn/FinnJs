@@ -8,7 +8,5 @@ import FinnRouter from '../component/FinnRouter';
 
 render((
     <FinnRouter/>
-    
+
 ), document.getElementById('react-content'));
-
-

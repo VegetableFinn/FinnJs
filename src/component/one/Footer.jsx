@@ -11,7 +11,7 @@ const Footer = React.createClass({
   render() {
     return (
       <div className="footer">
-              生活就是最精彩的剧本。v.0.10.0
+              生活就是最精彩的剧本。v.0.11.0
       </div>);
   },
 });

@@ -1,7 +1,7 @@
 import {Modal, message} from 'antd';
 
 
-const mode = 'server';
+const mode = 'local';
 
 const util = {
 
@@ -28,8 +28,16 @@ const util = {
             const uri = "";
             return uri;
         }
+    },
+
+    getCredentialTag(){
+      if(mode == 'local'){
+        return false;
+      }else{
+        return true;
+      }
     }
-    
+
 };
 
 export default util;
