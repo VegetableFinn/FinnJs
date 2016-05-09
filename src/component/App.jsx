@@ -9,24 +9,23 @@ const SubMenu = Menu.SubMenu;
 const storage = window.sessionStorage;
 
 const App = React.createClass({
-    
+
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
-    
+
     getInitialState() {
         return null;
     },
     componentWillReceiveProps(nextProps) {
     },
-    
+
     componentWillMount(){
         if(storage.getItem("user") === null){
              this.context.router.push('/');
         }
-       
     },
-    
+
     componentDidMount(){
 //        this.context.router.push('/');
 //        alert(storage.getItem("abc"));
@@ -41,7 +40,8 @@ const App = React.createClass({
                   defaultSelectedKeys={['home_welcome']} defaultOpenKeys={['home_menu']}>
                   <SubMenu key="home_menu" title={<span><Icon type="user" />HomePage</span>}>
                     <Menu.Item key="home_welcome"><Link to="/home/welcome">Hello Finn.</Link></Menu.Item>
-                  </SubMenu>
+                    <Menu.Item key="home_plan"><Link to="/home/plan">Live a plan.</Link></Menu.Item>
+                </SubMenu>
                   <SubMenu key="daily_menu" title={<span><Icon type="user" />Daily</span>}>
                     <Menu.Item key="home_daily"><Link to="/home/daily">Daily life.</Link></Menu.Item>
                   </SubMenu>
@@ -70,4 +70,3 @@ const App = React.createClass({
 
 
 export default App;
-
