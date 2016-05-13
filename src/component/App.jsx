@@ -21,9 +21,9 @@ const App = React.createClass({
     },
 
     componentWillMount(){
-        if(storage.getItem("user") === null){
-             this.context.router.push('/');
-        }
+        // if(storage.getItem("user") === null){
+        //      this.context.router.push('/');
+        // }
     },
 
     componentDidMount(){

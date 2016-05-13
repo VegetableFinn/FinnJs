@@ -24,7 +24,8 @@ let AddPlanModel = React.createClass({
       total: formdata.total,
       unit: formdata.unit,
       startDt: this.state.startDt,
-      endDt: this.state.endDt
+      endDt: this.state.endDt,
+      category: formdata.category
     };
     const self = this;
     $.ajax({
@@ -86,6 +87,18 @@ let AddPlanModel = React.createClass({
           onOk={this.handleSubmit}
           onCancel={this.hideModal}>
           <Form horizontal form={this.props.form}>
+            <FormItem
+              {...formItemLayout}
+              label="类型：">
+              <Select {...getFieldProps('category', {})}>
+                <Option value="Coding">Coding</Option>
+                <Option value="Outing">Outing</Option>
+                <Option value="Relaxing">Relaxing</Option>
+                <Option value="Exercising">Exercising</Option>
+                <Option value="Studying">Studying</Option>
+                <Option value="Sleeping">Sleeping</Option>
+              </Select>
+            </FormItem>
             <FormItem
               {...formItemLayout}
               label="内容：">
