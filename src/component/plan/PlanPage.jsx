@@ -2,14 +2,15 @@ import './PlanPage.less';
 import util from '../../common/util.js';
 
 import React from 'react';
-import { Table, Icon,Modal } from 'antd' ;
+import { Table, Icon,Modal,Spin } from 'antd' ;
 
 import AddPlanModel from './AddPlanModel'
 
 const PlanPage = React.createClass({
   getInitialState() {
     return {
-      planDataList:[]
+      planDataList:[],
+      loadingAni: false
     };
   },
 
@@ -36,7 +37,63 @@ const PlanPage = React.createClass({
       title: '结束时间',
       dataIndex: 'endDt',
       key: 'endDt',
+    }, {
+      title: '操作',
+      key: 'operation',
+      render(text, record) {
+        const content = [];
+        if (record.runing) {
+          content.push(
+            <span key="spankey">
+              <a onClick={self.handleFinish.bind(self,record.id)}>结束</a>
+            </span>
+          );
+        }else{
+          content.push(
+            <span key="spankey">
+              <a onClick={self.handleFinish.bind(self,record.id)}>开始</a>
+            </span>
+          );
+        }
+        return (
+          content
+        );
+      }
     }];
+  },
+
+  handleFinish(id){
+    var self = this;
+    let data = {
+      id: id
+    };
+    $.ajax({
+      type: "get",
+      url: util.getBaseUrl() + "plan/startPlan.json",
+      data: data,
+      xhrFields: {
+        withCredentials: util.getCredentialTag()
+      },
+      beforeSend: function(XMLHttpRequest){
+        self.setState({
+          loadingAni: true
+        });
+      },
+      success: function(data, textStatus){
+        const resultJson = JSON.parse(data);
+        if(resultJson.success){
+          self.refreshData();
+        }
+      },
+      complete: function(XMLHttpRequest, textStatus){
+        self.setState({
+          loadingAni: false
+        });
+      },
+      error: function(){
+        //请求出错处理
+      }
+    });
   },
 
 
@@ -51,7 +108,8 @@ const PlanPage = React.createClass({
       row.endDt = planData.endDt;
       row.id = planData.id;
       row.progress = planData.progress;
-      row.percent = planData.percent;
+      row.percent = planData.percent + " %";
+      row.runing = planData.runing;
       index = index + 1;
       dataSource.push(row);
     });
@@ -73,19 +131,22 @@ const PlanPage = React.createClass({
         withCredentials: util.getCredentialTag()
       },
       beforeSend: function(XMLHttpRequest){
-        //ShowLoading();
+        self.setState({
+          loadingAni: true
+        });
       },
       success: function(data, textStatus){
         const resultJson = JSON.parse(data);
         if(resultJson.success){
           self.setState({
-            planDataList: resultJson.planList
+            planDataList: resultJson.planList,
           });
-
         }
       },
       complete: function(XMLHttpRequest, textStatus){
-        //HideLoading();
+        self.setState({
+          loadingAni: false
+        });
       },
       error: function(){
         //请求出错处理
@@ -101,11 +162,14 @@ const PlanPage = React.createClass({
     return (
       <div className="plan-main">
         <div className="plan-tools">
-          <AddPlanModel handleRefresh={this.refreshData} ></AddPlanModel>
+          <AddPlanModel handleRefresh={this.refreshData} >
+          </AddPlanModel>
         </div>
-        <Table
-          columns={columns}
-          dataSource={dataSource} />
+        <Spin tip="正在读取数据..." spinning={this.state.loadingAni}>
+          <Table
+            columns={columns}
+            dataSource={dataSource} />
+        </Spin>
       </div>
     );
   },

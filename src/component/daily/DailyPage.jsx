@@ -3,7 +3,7 @@ import util from '../../common/util.js';
 import AddDailyModel from './AddDailyModel'
 
 import React from 'react';
-import { Table, Icon,Modal } from 'antd' ;
+import { Table, Icon,Modal,Spin } from 'antd' ;
 
 const DailyPage = React.createClass({
   getInitialState() {
@@ -22,7 +22,9 @@ const DailyPage = React.createClass({
         withCredentials: util.getCredentialTag()
       },
       beforeSend: function(XMLHttpRequest){
-        //ShowLoading();
+        self.setState({
+          loadingAni: true
+        });
       },
       success: function(data, textStatus){
         const resultJson = JSON.parse(data);
@@ -31,7 +33,9 @@ const DailyPage = React.createClass({
         }
       },
       complete: function(XMLHttpRequest, textStatus){
-        //HideLoading();
+        self.setState({
+          loadingAni: false
+        });
       },
       error: function(){
         //请求出错处理
@@ -128,7 +132,9 @@ const DailyPage = React.createClass({
         withCredentials: util.getCredentialTag()
       },
       beforeSend: function(XMLHttpRequest){
-        //ShowLoading();
+        self.setState({
+          loadingAni: true
+        });
       },
       success: function(data, textStatus){
         const resultJson = JSON.parse(data);
@@ -141,7 +147,9 @@ const DailyPage = React.createClass({
         }
       },
       complete: function(XMLHttpRequest, textStatus){
-        //HideLoading();
+        self.setState({
+          loadingAni: false
+        });
       },
       error: function(){
         //请求出错处理
