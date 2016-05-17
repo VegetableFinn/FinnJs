@@ -45,8 +45,6 @@ const App = React.createClass({
     return (
       <div className="ant-layout-aside">
         <aside className="ant-layout-sider">
-          <div className="ant-layout-logo">
-          </div>
           <Menu onClick={this.handleClick}
             mode="inline"
             theme="dark"

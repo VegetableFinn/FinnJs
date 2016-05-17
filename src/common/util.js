@@ -1,7 +1,7 @@
 import {Modal, message} from 'antd';
 
 
-const mode = 'server';
+const mode = 'local';
 
 const util = {
 
